@@ -6,7 +6,11 @@
 
 ```sh
 yarn add -D vitest @vitest/ui eslint-plugin-vitest
+```
+```sh
 yarn add -D jsdom @testing-library/jest-dom @testing-library/react
+```
+```sh
 yarn add -D @vitest/coverage-v8
 ```
 
