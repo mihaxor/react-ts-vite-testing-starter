@@ -7,6 +7,7 @@ export default mergeConfig(viteConfig as UserConfig, defineConfig({
         globals: true,
         environment: 'jsdom',
         reporters: ['verbose'],
-        pool: 'forks'
+        pool: 'forks',
+        setupFiles: ['./vitest-setup.ts']
     }
-}))
+}));

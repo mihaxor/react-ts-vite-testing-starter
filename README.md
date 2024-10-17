@@ -30,9 +30,10 @@ yarn add -D @vitest/coverage-v8
 ## Update TypeScript configuration `tsconfig.json`
 
 ```json
-  "include": [
-    "node_modules/vitest/globals.d.ts"
-  ]
+"compilerOptions": {
+...
+"types": ["vitest/globals", "@testing-library/jest-dom"]
+}
 ```
 
 ## Add Vitest plugin to ESLint
@@ -74,7 +75,14 @@ export default mergeConfig(viteConfig as UserConfig, defineConfig({
         globals: true,
         environment: 'jsdom',
         reporters: ['verbose'],
-        pool: 'forks'
+        pool: 'forks',
+        setupFiles: ['./vitest-setup.ts']
     }
 }));
+```
+Add setup file for _jest-dom_
+
+```ts
+// In your own vitest-setup.ts (or any other name)
+import '@testing-library/jest-dom/vitest';
 ```
