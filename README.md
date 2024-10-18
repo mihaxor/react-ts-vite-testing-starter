@@ -8,14 +8,14 @@
 yarn add -D vitest @vitest/ui eslint-plugin-vitest
 ```
 ```sh
-yarn add -D jsdom @testing-library/jest-dom @testing-library/dom @testing-library/react
+yarn add -D jsdom @testing-library/jest-dom @testing-library/dom @testing-library/react @testing-library/user-event
 ```
 ```sh
 yarn add -D @vitest/coverage-v8
 ```
-- *@testing-library/dom is required for the `screen` object in React Testing Library*
 - *Newer version >= v16 of React Testing Library may require @testing-library/dom*
-
+- *@testing-library/dom is required for the `screen` object in React Testing Library*
+- *@testing-library/user-event is required for the `userEvent` for simulating user events*
 
 ## Add test scripts to package.json `test` object
 
