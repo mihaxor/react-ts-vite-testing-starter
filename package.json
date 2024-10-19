@@ -10,7 +10,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest",
-    "test:watch": "vitest --ui",
+    "test:ui": "vitest --ui",
+    "test:verbose": "vitest --run --reporter verbose",
     "test:coverage": "vitest --coverage"
   },
   "dependencies": {

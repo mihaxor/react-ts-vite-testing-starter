@@ -1,4 +1,4 @@
-import {beforeEach, describe, test} from 'vitest';
+import {describe, test} from 'vitest';
 import {fireEvent, logRoles, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../../App.tsx';
@@ -6,13 +6,22 @@ import App from '../../App.tsx';
 describe('Vitest', () => {
     let globalContainer = {} as HTMLElement;
 
+    beforeAll(() => {
+    });
+
     beforeEach(() => {
         const {container} = render(<App />);
 
         globalContainer = container;
     });
 
-    test('should run find the component', () => {
+    afterEach(() => {
+    });
+
+    afterAll(() => {
+    });
+
+    test.concurrent('should run find the component', () => {
 
         logRoles(globalContainer);
 
@@ -62,7 +71,7 @@ describe('Vitest', () => {
         expect(checkbox).toBeChecked();
     });
 
-    test('should test the button state with userEvent and Promise', () => {
+    test('should test the button state with userEvent and Promise', async () => {
         const user = userEvent.setup();
 
         const button = screen.getByRole('button', {name: /Just click to win something/i});
@@ -71,7 +80,7 @@ describe('Vitest', () => {
         expect(button).toBeEnabled();
         expect(checkbox).not.toBeChecked();
 
-        user.click(checkbox)
+        await user.click(checkbox)
             .then(() => {
                 expect(button).toBeDisabled();
                 expect(checkbox).toBeChecked();
@@ -81,6 +90,31 @@ describe('Vitest', () => {
     test('should check the element if it is in the DOM', async () => {
         const nullButton = screen.queryByRole('button', {name: /testing/i});
 
+        const testThrowError = () => {
+            throw new Error('New Error!')
+        };
+
         expect(nullButton).not.toBeInTheDocument();
+        expect(testThrowError).toThrow();
+        expect(testThrowError).toBeTypeOf('function');
     });
+
+    // testing call endpoint
+    test('should check the element if it is in the DOM with async', async () =>
+        new Promise<void>(done => {
+            fetch('https://jsonplaceholder.typicode.com/todos/1')
+                .then(response => {
+                    expect(response.status).toBe(200);
+                    return response.json();
+                })
+                .then(data => {
+                    try {
+                        expect(data).toHaveProperty('userId');
+                        expect(data).toBeTypeOf('object');
+                        done();
+                    } catch (error) {
+                        console.log(error);
+                    }
+                })
+        }));
 });
