@@ -32,7 +32,8 @@ yarn add -D @vitest/coverage-v8
 ```json
 {
   "test": "vitest",
-  "test:watch": "vitest --ui",
+  "test:ui": "vitest --ui",
+  "test:verbose": "vitest --run --reporter verbose",
   "test:coverage": "vitest --coverage"
 }
 ```
