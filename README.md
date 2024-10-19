@@ -7,19 +7,25 @@
 ```sh
 yarn add -D vitest @vitest/ui eslint-plugin-vitest
 ```
+
 ```sh
 yarn add -D jsdom @testing-library/jest-dom@6.0.0 @testing-library/dom @testing-library/react @testing-library/user-event
 ```
+
 ```sh 
 yarn add -D @types/jest
 ```
+
 ```sh
 yarn add -D @vitest/coverage-v8
 ```
+
 - *Newer version >= v16 of React Testing Library may require @testing-library/dom*
 - *@testing-library/dom is required for the `screen` object in React Testing Library*
 - *@testing-library/user-event is required for the `userEvent` for simulating user events*
-- *@testing-library/jest-dom v6.0.0 is required for compatibility with `@types/jest` and `Vitest`, as the latest version may not fully support the current TypeScript configuration, potentially causing some documentation methods to be unavailable*
+- *@testing-library/jest-dom v6.0.0 is required for compatibility with `@types/jest` and `Vitest`, as the latest version
+  may not fully support the current TypeScript configuration, potentially causing some documentation methods to be
+  unavailable*
 
 ## Add test scripts to package.json `test` object
 
@@ -34,10 +40,15 @@ yarn add -D @vitest/coverage-v8
 ## Update TypeScript configuration `tsconfig.json`
 
 ```json
+// In tsconfig.json
 "compilerOptions": {
 ...
 "types": ["vitest/globals", "@testing-library/jest-dom"]
-}
+},
+"include": [
+...
+"./vitest.setup.ts"
+],
 ```
 
 ## Add Vitest plugin to ESLint
@@ -80,13 +91,14 @@ export default mergeConfig(viteConfig as UserConfig, defineConfig({
         environment: 'jsdom',
         reporters: ['verbose'],
         pool: 'forks',
-        setupFiles: ['./vitest-setup.ts']
+        setupFiles: ['./vitest.setup.ts']
     }
 }));
 ```
+
 Add setup file for _jest-dom_
 
 ```ts
-// In your own vitest-setup.ts (or any other name)
+// In your own vitest.setup.ts (or any other name)
 import '@testing-library/jest-dom/vitest';
 ```
