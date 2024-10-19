@@ -8,6 +8,6 @@ export default mergeConfig(viteConfig as UserConfig, defineConfig({
         environment: 'jsdom',
         reporters: ['verbose'],
         pool: 'forks',
-        setupFiles: ['./vitest-setup.ts']
+        setupFiles: ['./vitest.setup.ts']
     }
 }));
