@@ -5,11 +5,11 @@
 ### Install dependencies
 
 ```sh
-yarn add -D vitest @vitest/ui eslint-plugin-vitest
+yarn add -D vitest @vitest/ui @vitest/eslint-plugin
 ```
 
 ```sh
-yarn add -D jsdom @testing-library/jest-dom@6.0.0 @testing-library/dom @testing-library/react @testing-library/user-event
+yarn add -D jsdom @testing-library/jest-dom @testing-library/dom @testing-library/react @testing-library/user-event
 ```
 
 ```sh 
@@ -23,9 +23,6 @@ yarn add -D @vitest/coverage-v8
 - *Newer version >= v16 of React Testing Library may require @testing-library/dom*
 - *@testing-library/dom is required for the `screen` object in React Testing Library*
 - *@testing-library/user-event is required for the `userEvent` for simulating user events*
-- *@testing-library/jest-dom v6.0.0 is required for compatibility with `@types/jest` and `Vitest`, as the latest version
-  may not fully support the current TypeScript configuration and potentially causing some documentation methods to be
-  unavailable*
 
 ## Add test scripts to package.json `test` object
 
@@ -55,7 +52,7 @@ yarn add -D @vitest/coverage-v8
 ## Add Vitest plugin to ESLint
 
 ```ts
-import vitest from 'eslint-plugin-vitest'
+import vitest from "@vitest/eslint-plugin";
 
 export default tseslint.config(
     {
@@ -65,7 +62,7 @@ export default tseslint.config(
             }
         },
         plugins: {
-            vitest
+            vitest: vitest
         },
         rules: {
             ...vitest.configs.recommended.rules, // you can also use vitest.configs.all.rules to enable all rules
@@ -87,13 +84,19 @@ import {UserConfig} from 'vitest/node';
 import viteConfig from './vite.config';
 
 export default mergeConfig(viteConfig as UserConfig, defineConfig({
-    test: {
-        globals: true,
-        environment: 'jsdom',
-        reporters: ['verbose'],
-        pool: 'forks',
-        setupFiles: ['./vitest.setup.ts']
-    }
+  test: {
+    reporters: ['verbose'],
+    globals: true,
+    environment: 'jsdom',
+    pool: 'forks',  // https://vitest.dev/config/#pool
+    coverage: {
+      provider: 'v8',
+      reportsDirectory: './coverage',
+      include: ['src/**/*.{ts,tsx}'],
+      exclude: []
+    },
+    setupFiles: ['./vitest.setup.ts']
+  }
 }));
 ```
 

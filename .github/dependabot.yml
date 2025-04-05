@@ -1,0 +1,18 @@
+version: 2
+updates:
+  - package-ecosystem: docker
+    directory: /
+    schedule:
+      interval: weekly
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: daily
+      time: "07:00"
+      timezone: "Europe/Bucharest"
+    allow:
+      - dependency-type: direct
+    ignore:
+      - dependency-name: "*"
+        update-types: [ "version-update:semver-major" ]
+    versioning-strategy: increase

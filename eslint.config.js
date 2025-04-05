@@ -1,40 +1,48 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import tseslint from 'typescript-eslint'
-import vitest from 'eslint-plugin-vitest'
+import globals from 'globals';
+import importPlugin from 'eslint-plugin-import'
+import reactRefresh from 'eslint-plugin-react-refresh';
+import reactHooks from 'eslint-plugin-react-hooks';
+import tsParser from '@typescript-eslint/parser';
+import eslintJs from '@eslint/js';
+import eslintTs from 'typescript-eslint';
+import vitest from '@vitest/eslint-plugin';
 
-export default tseslint.config(
-    { ignores: ['dist'] },
+export default eslintTs.config([
+    eslintJs.configs.recommended,
+    eslintTs.configs.recommended,
+    { ignores: ['build/**/*', 'coverage/**/*', 'public/**/*'], },
     {
-        extends: [
-            js.configs.recommended,
-            ...tseslint.configs.recommended
-        ],
-        files: ['**/*.{ts,tsx}'],
+        plugins: {
+            import: importPlugin,
+            'import/parsers': tsParser,
+            'react-refresh': reactRefresh,
+            'react-hooks': reactHooks,
+            vitest: vitest
+        },
         languageOptions: {
             ecmaVersion: 2020,
-            globals: {
-                ...globals.browser,
-                ...vitest.environments.env.globals
+            globals: globals.browser,
+            parser: tsParser,
+        },
+        settings: {
+            'import/parsers': {
+                '@typescript-eslint/parser': ['.ts', '.tsx'],
             },
         },
-        plugins: {
-            vitest,
-            'react-hooks': reactHooks,
-            'react-refresh': reactRefresh,
-        },
         rules: {
+            ...importPlugin.configs.typescript.rules,
             ...reactHooks.configs.recommended.rules,
+            ...vitest.configs.recommended.rules,
+            'import/no-duplicates': 'warn',
             'react-refresh/only-export-components': [
-                'warn',
-                { allowConstantExport: true },
+                'warn', { allowConstantExport: true, }
             ],
-            ...vitest.configs.recommended.rules, // you can also use vitest.configs.all.rules to enable all rules
-            'no-unused-vars': 'warn', // warning, not error
-            'vitest/expect-expect': 'off', // eliminate distracting red squiggles while writing tests
-            'react/prop-types': 'off', // turn off props validation
+            '@typescript-eslint/no-unused-vars': 'off',
+            '@typescript-eslint/no-unused-expressions': 'off',
+            'no-duplicate-imports': 'error',
+            'no-unneeded-ternary': 'error',
+            'prefer-object-spread': 'error',
+            'react-hooks/rules-of-hooks': 'error',
+            'react-hooks/exhaustive-deps': 'warn'
         },
-    },
-)
+    }]);

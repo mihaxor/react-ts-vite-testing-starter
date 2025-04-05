@@ -4,10 +4,16 @@ import viteConfig from './vite.config';
 
 export default mergeConfig(viteConfig as UserConfig, defineConfig({
     test: {
+        reporters: ['verbose'],
         globals: true,
         environment: 'jsdom',
-        reporters: ['verbose'],
-        pool: 'forks',
+        pool: 'forks',  // https://vitest.dev/config/#pool
+        coverage: {
+            provider: 'v8',
+            reportsDirectory: './coverage',
+            include: ['src/**/*.{ts,tsx}'],
+            exclude: []
+        },
         setupFiles: ['./vitest.setup.ts']
     }
 }));

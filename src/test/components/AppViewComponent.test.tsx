@@ -1,5 +1,6 @@
 import {fireEvent, logRoles, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import {afterAll, afterEach, beforeAll, beforeEach, describe, expect, test} from 'vitest';
 import App from '../../App.tsx';
 
 describe('Vitest', () => {
