@@ -45,7 +45,7 @@ yarn add -D @vitest/coverage-v8
 },
 "include": [
 ...
-"./vitest.setup.ts"
+"./setupTests.ts"
 ],
 ```
 
@@ -95,7 +95,7 @@ export default mergeConfig(viteConfig as UserConfig, defineConfig({
       include: ['src/**/*.{ts,tsx}'],
       exclude: []
     },
-    setupFiles: ['./vitest.setup.ts']
+    setupFiles: ['./setupTests.ts']
   }
 }));
 ```
@@ -103,6 +103,6 @@ export default mergeConfig(viteConfig as UserConfig, defineConfig({
 Add setup file for _jest-dom_
 
 ```ts
-// In your own vitest.setup.ts (or any other name)
+// In your own setupTests.ts (or any other name)
 import '@testing-library/jest-dom/vitest';
 ```

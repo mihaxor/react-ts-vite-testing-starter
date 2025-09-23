@@ -87,7 +87,7 @@ describe('Vitest', () => {
             });
     });
 
-    test('should check the element if it is in the DOM', async () => {
+    test('should check the element if it is in the DOM', () => {
         const nullButton = screen.queryByRole('button', {name: /testing/i});
 
         const testThrowError = () => {

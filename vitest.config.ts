@@ -7,13 +7,13 @@ export default mergeConfig(viteConfig as UserConfig, defineConfig({
         reporters: ['verbose'],
         globals: true,
         environment: 'jsdom',
-        pool: 'forks',  // https://vitest.dev/config/#pool
+        pool: 'forks',
         coverage: {
             provider: 'v8',
             reportsDirectory: './coverage',
             include: ['src/**/*.{ts,tsx}'],
             exclude: []
         },
-        setupFiles: ['./vitest.setup.ts']
+        setupFiles: ['src/test/setupTests.ts'],
     }
 }));

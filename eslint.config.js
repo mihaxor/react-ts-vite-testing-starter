@@ -5,44 +5,53 @@ import reactHooks from 'eslint-plugin-react-hooks';
 import tsParser from '@typescript-eslint/parser';
 import eslintJs from '@eslint/js';
 import eslintTs from 'typescript-eslint';
-import vitest from '@vitest/eslint-plugin';
 
 export default eslintTs.config([
     eslintJs.configs.recommended,
     eslintTs.configs.recommended,
-    { ignores: ['build/**/*', 'coverage/**/*', 'public/**/*'], },
+    eslintTs.configs.recommendedTypeChecked,
+    eslintTs.configs.stylistic,
+    { ignores: ['build/**/*', 'coverage/**/*', 'public/**/*', 'eslint.config.*', '*.config.ts', 'scripts/*'], },
     {
         plugins: {
-            import: importPlugin,
             'import/parsers': tsParser,
-            'react-refresh': reactRefresh,
-            'react-hooks': reactHooks,
-            vitest: vitest
+            'react-hooks': reactHooks
         },
         languageOptions: {
             ecmaVersion: 2020,
             globals: globals.browser,
             parser: tsParser,
+            parserOptions: {
+                projectService: true,
+                tsconfigRootDir: import.meta.dirname,
+            },
         },
         settings: {
             'import/parsers': {
                 '@typescript-eslint/parser': ['.ts', '.tsx'],
             },
         },
+        extends: [
+            importPlugin.flatConfigs.recommended,
+            importPlugin.flatConfigs.typescript,
+            reactRefresh.configs.vite
+        ],
         rules: {
-            ...importPlugin.configs.typescript.rules,
-            ...reactHooks.configs.recommended.rules,
-            ...vitest.configs.recommended.rules,
+            ...reactHooks.configs['recommended-latest'].rules,
             'import/no-duplicates': 'warn',
             'react-refresh/only-export-components': [
                 'warn', { allowConstantExport: true, }
             ],
             '@typescript-eslint/no-unused-vars': 'off',
             '@typescript-eslint/no-unused-expressions': 'off',
+            '@typescript-eslint/no-floating-promises': 'off',
+            '@typescript-eslint/no-empty-function': 'off',
+            '@typescript-eslint/no-misused-promises': 'off',
+            'import/no-named-as-default-member': 'off',
+            'import/no-unresolved': 'off',
             'no-duplicate-imports': 'error',
             'no-unneeded-ternary': 'error',
             'prefer-object-spread': 'error',
-            'react-hooks/rules-of-hooks': 'error',
-            'react-hooks/exhaustive-deps': 'warn'
+            'react-hooks/rules-of-hooks': 'error'
         },
     }]);
