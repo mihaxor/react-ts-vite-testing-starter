@@ -104,5 +104,5 @@ Add setup file for _jest-dom_
 
 ```ts
 // In your own setupTests.ts (or any other name)
-import '@testing-library/jest-dom/vitest';
+import '@testing-library/jest-dom';
 ```

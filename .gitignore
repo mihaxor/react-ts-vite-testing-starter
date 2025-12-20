@@ -24,6 +24,7 @@ dist-ssr
 *.sw?
 coverage
 
+pnpm-lock.yaml
 package-lock.json
 yarn.lock
 *.iml
